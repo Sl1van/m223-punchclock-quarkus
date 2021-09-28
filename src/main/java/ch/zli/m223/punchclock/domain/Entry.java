@@ -1,6 +1,7 @@
 package ch.zli.m223.punchclock.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,11 +11,23 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
     private LocalDateTime checkIn;
 
     @Column(nullable = false)
+    @NotNull
     private LocalDateTime checkOut;
+
+    @Column
+    @ManyToOne
+    @NotNull
+    private User user;
+
+    @Column
+    @ManyToOne
+    @NotNull
+    private Category categories;
 
     public Long getId() {
         return id;
