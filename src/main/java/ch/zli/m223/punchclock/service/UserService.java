@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import ch.zli.m223.punchclock.domain.Role;
@@ -23,6 +24,17 @@ public class UserService {
         }
         entityManager.persist(user);
         return user;
+    }
+
+    public User matchCredentials(String username, String password){
+        TypedQuery<User> tq = entityManager.createQuery("from User WHERE username=?1", User.class);
+        User result = tq.setParameter(1, username).getSingleResult();
+        if(result == null){
+            throw new RuntimeException("No User was found with the following username: "+ username);
+        } else if(!result.getPassword().equals(password)){
+            throw new RuntimeException("passwords do not match");
+        }
+        return result;
     }
     private void setDefaultUserRoles(User user){
         List<Role> roles = new ArrayList<>();

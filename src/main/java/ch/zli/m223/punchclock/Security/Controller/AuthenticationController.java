@@ -36,7 +36,15 @@ public class AuthenticationController {
     @Path("register")
     @PermitAll
     public void register(User user){
-        System.out.println(user.getUsername()+" "+user.getPassword());
         userService.createUser(user);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON) 
+    @Path("login")
+    @PermitAll
+    public String login(User tempUser){
+        User user = userService.matchCredentials(tempUser.getUsername(), tempUser.getPassword());
+        return authenticationService.GenerateValidJwtToken(user);
     }
 }
