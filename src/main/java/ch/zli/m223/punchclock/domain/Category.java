@@ -16,7 +16,6 @@ public class Category {
     @NotNull
     private String name;
 
-    @Column
-    @OneToMany(mappedBy="entry_FK")
+    @OneToMany(mappedBy="categories")
     private List<Entry> entries;
 }

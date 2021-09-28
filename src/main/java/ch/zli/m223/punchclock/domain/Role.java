@@ -14,7 +14,6 @@ public class Role {
     @NotNull
     private String name;
 
-    @Column
     @ManyToMany
     private List<User> users;
 }

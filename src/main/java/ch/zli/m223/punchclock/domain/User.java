@@ -18,12 +18,10 @@ public class User {
     @NotNull
     private String password;
 
-    @Column
     @ManyToMany
     @NotNull
     private List<Role> role;
 
-    @Column
-    @OneToMany(mappedBy="user_FK")
+    @OneToMany(mappedBy="user")
     private List<Entry> entries;
 }

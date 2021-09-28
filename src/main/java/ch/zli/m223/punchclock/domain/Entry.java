@@ -19,12 +19,10 @@ public class Entry {
     @NotNull
     private LocalDateTime checkOut;
 
-    @Column
     @ManyToOne
     @NotNull
     private User user;
 
-    @Column
     @ManyToOne
     @NotNull
     private Category categories;
