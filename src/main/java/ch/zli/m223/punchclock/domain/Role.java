@@ -15,7 +15,8 @@ public class Role {
     private String name;
 
     @ManyToMany
-    private List<User> users;
+    @JoinTable(name="USER_ROLE")
+    private List<User> user;
 
     public Long getId() {
         return id;
@@ -34,11 +35,11 @@ public class Role {
     }
 
     public List<User> getUsers() {
-        return users;
+        return user;
     }
 
     public void setUsers(List<User> users) {
-        this.users = users;
+        this.user = users;
     }
 
     
