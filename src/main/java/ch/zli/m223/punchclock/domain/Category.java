@@ -16,7 +16,7 @@ public class Category {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy="categories")
+    @OneToMany(mappedBy="category")
     private List<Entry> entries;
 
     public Long getId() {
