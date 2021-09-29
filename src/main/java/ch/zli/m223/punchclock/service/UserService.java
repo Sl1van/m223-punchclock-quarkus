@@ -6,8 +6,10 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 
 import ch.zli.m223.punchclock.domain.Role;
 import ch.zli.m223.punchclock.domain.User;
@@ -28,9 +30,14 @@ public class UserService {
 
     public User matchCredentials(String username, String password){
         TypedQuery<User> tq = entityManager.createQuery("from User WHERE username=?1", User.class);
-        User result = tq.setParameter(1, username).getSingleResult();
+        User result;
+        try{
+            result = tq.setParameter(1, username).getSingleResult();
+        }catch(NoResultException e){
+            throw new BadRequestException("No User was found with the following username: "+ username);
+        } 
         if(result == null){
-            throw new RuntimeException("No User was found with the following username: "+ username);
+            throw new BadRequestException("No User was found with the following username: "+ username);
         } else if(!result.getPassword().equals(password)){
             throw new RuntimeException("passwords do not match");
         }
