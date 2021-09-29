@@ -26,7 +26,7 @@ public class EntryController {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"admin"})
     @Path("/all")
-    @Operation(summary = "Lists all Entries of all users", description = "")
+    @Operation(summary = "List all Entries of all users", description = "Lists all Entries of all users, instead of listing only the entries of the user that sent the request")
     public List<Entry> listAll() {
         authenticationService.checkJWT();
         return entryService.findAll();
@@ -35,7 +35,7 @@ public class EntryController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed({"user", "admin"})
-    @Operation(summary = "List all Entries of the User with the id ", description = "")
+    @Operation(summary = "List all Entries of the User with the id", description = "Lists all Entries of the User with the id of the user that sent the request.")
     public List<Entry> list() {
         authenticationService.checkJWT();
         return entryService.findEntries(authenticationService.getIdFromJWT());
