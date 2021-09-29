@@ -2,6 +2,9 @@ package ch.zli.m223.punchclock.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,10 +24,12 @@ public class Entry {
 
     @ManyToOne
     @NotNull
+    @JsonBackReference(value="user-entry")
     private User user;
 
     @ManyToOne
     @NotNull
+    @JsonBackReference(value="category-entry")
     private Category category;
 
     public Long getId() {

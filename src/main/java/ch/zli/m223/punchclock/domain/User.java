@@ -2,6 +2,10 @@ package ch.zli.m223.punchclock.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -20,9 +24,12 @@ public class User {
 
     @ManyToMany
     @NotNull
+    @JsonManagedReference(value="user-role")
+    @JsonIgnore
     private List<Role> role;
-
+    
     @OneToMany(mappedBy="user")
+    @JsonManagedReference(value="user-entry")
     private List<Entry> entries;
 
     public Long getId() {
