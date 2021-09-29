@@ -30,7 +30,6 @@ public class DataInitializerBean {
 
         // init users
         User user = new User();
-        // user.setId(1L);
         user.setUsername("TestUser");
         user.setPassword("password");
         List<Role> roles = new ArrayList<>();
@@ -39,20 +38,21 @@ public class DataInitializerBean {
         user.setRole(roles);
         em.persist(user);
 
+        //init categories
         Category workActivity = new Category();
         workActivity.setName("work");
         em.persist(workActivity);
         Category holidayActivity = new Category();
         holidayActivity.setName("holiday");
         em.persist(holidayActivity);
-
+        
+        //init entries
         Entry entry = new Entry();
         entry.setCategory(em.find(Category.class, 1L));
         entry.setCheckIn(LocalDateTime.now());
         entry.setCheckOut(LocalDateTime.now());
         entry.setUser(em.find(User.class, 1L));
         em.persist(entry);
-
         Entry entry2 = new Entry();
         entry2.setCategory(em.find(Category.class, 2L));
         entry2.setCheckIn(LocalDateTime.now());
