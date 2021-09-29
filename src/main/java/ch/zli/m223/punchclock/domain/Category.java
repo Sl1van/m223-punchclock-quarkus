@@ -1,11 +1,9 @@
 package ch.zli.m223.punchclock.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,8 +17,8 @@ public class Category {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy="category")
-    @JsonManagedReference(value="category-entry")
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference(value = "category-entry")
     private List<Entry> entries;
 
     public Long getId() {
@@ -47,5 +45,5 @@ public class Category {
         this.entries = entries;
     }
 
-    
+
 }

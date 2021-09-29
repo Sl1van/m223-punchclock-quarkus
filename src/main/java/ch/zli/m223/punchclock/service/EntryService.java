@@ -1,25 +1,21 @@
 package ch.zli.m223.punchclock.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import ch.zli.m223.punchclock.Security.Service.AuthenticationService;
+import ch.zli.m223.punchclock.domain.Entry;
+import ch.zli.m223.punchclock.domain.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-
-import org.hibernate.Session;
-
-import ch.zli.m223.punchclock.Security.Service.AuthenticationService;
-import ch.zli.m223.punchclock.domain.Entry;
-import ch.zli.m223.punchclock.domain.User;
+import java.util.List;
 
 @ApplicationScoped
 public class EntryService {
     @Inject
     private EntityManager entityManager;
-    
+
     @Inject
     private AuthenticationService authenticationService;
 
@@ -27,7 +23,7 @@ public class EntryService {
     public EntryService() {
     }
 
-    @Transactional 
+    @Transactional
     public Entry createEntry(Entry entry) {
         User userCalling = entityManager.find(User.class, authenticationService.getIdFromJWT());
         entry.setUser(userCalling);
@@ -49,13 +45,13 @@ public class EntryService {
     public Entry deleteEntry(long id) {
         Entry entry = entityManager.find(Entry.class, id);
         entityManager.remove(entry);
-        
+
         return entry;
     }
-    
+
     @Transactional
     public Entry editEntry(long id, Entry entry) {
-        entityManager.merge(entry);    
+        entityManager.merge(entry);
         return entry;
     }
 }

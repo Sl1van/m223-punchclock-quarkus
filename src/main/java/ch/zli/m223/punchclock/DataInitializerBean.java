@@ -1,26 +1,25 @@
 package ch.zli.m223.punchclock;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-
 import ch.zli.m223.punchclock.domain.Category;
 import ch.zli.m223.punchclock.domain.Entry;
 import ch.zli.m223.punchclock.domain.Role;
 import ch.zli.m223.punchclock.domain.User;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class DataInitializerBean {
     @Inject
     EntityManager em;
-    
+
     @Transactional
-    public void initData(){
+    public void initData() {
         // init roles
         Role admin = new Role();
         admin.setName("admin");
@@ -46,14 +45,14 @@ public class DataInitializerBean {
         Category holidayActivity = new Category();
         holidayActivity.setName("holiday");
         em.persist(holidayActivity);
-        
+
         Entry entry = new Entry();
         entry.setCategory(em.find(Category.class, 1L));
         entry.setCheckIn(LocalDateTime.now());
         entry.setCheckOut(LocalDateTime.now());
         entry.setUser(em.find(User.class, 1L));
         em.persist(entry);
-        
+
         Entry entry2 = new Entry();
         entry2.setCategory(em.find(Category.class, 2L));
         entry2.setCheckIn(LocalDateTime.now());

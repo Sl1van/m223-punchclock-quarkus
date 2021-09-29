@@ -1,8 +1,8 @@
 package ch.zli.m223.punchclock;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import io.quarkus.runtime.Startup;
+
+import javax.enterprise.context.ApplicationScoped;
 
 @Startup
 @ApplicationScoped

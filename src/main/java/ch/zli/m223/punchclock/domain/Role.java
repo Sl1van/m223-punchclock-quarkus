@@ -1,11 +1,10 @@
 package ch.zli.m223.punchclock.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -19,8 +18,8 @@ public class Role {
     private String name;
 
     @ManyToMany
-    @JoinTable(name="USER_ROLE")
-    @JsonManagedReference(value="user-role")
+    @JoinTable(name = "USER_ROLE")
+    @JsonManagedReference(value = "user-role")
     @JsonIgnore
     private List<User> user;
 
@@ -48,5 +47,5 @@ public class Role {
         this.user = users;
     }
 
-    
+
 }
