@@ -19,3 +19,6 @@ Datenquelle: jdbc:h2:mem:punchclock
 Benutzername: zli
 Passwort: zli
 
+The Test Data for the Database is initialized in the DataInitializerBean which gets called by the StartUpBean which always gets called as soon as the server is up.
+
+The Documentation of all the REST endpoints are done via OpenAPI so you can see them in the Swagger ui().
