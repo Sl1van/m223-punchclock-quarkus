@@ -6,11 +6,14 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 
+import ch.zli.m223.punchclock.Security.Service.AuthenticationService;
 import ch.zli.m223.punchclock.domain.Entry;
+import ch.zli.m223.punchclock.domain.User;
 
 @ApplicationScoped
 public class EntryService {
@@ -18,7 +21,7 @@ public class EntryService {
     private EntityManager entityManager;
     
     @Inject
-    private Session session;
+    private AuthenticationService authenticationService;
 
 
     public EntryService() {
@@ -26,14 +29,20 @@ public class EntryService {
 
     @Transactional 
     public Entry createEntry(Entry entry) {
+        User userCalling = entityManager.find(User.class, authenticationService.getIdFromJWT());
+        entry.setUser(userCalling);
         entityManager.persist(entry);
         return entry;
     }
 
-    @SuppressWarnings("unchecked")
     public List<Entry> findAll() {
-        var query = entityManager.createQuery("FROM Entry");
+        TypedQuery<Entry> query = entityManager.createQuery("FROM Entry", Entry.class);
         return query.getResultList();
+    }
+
+    public List<Entry> findEntries(long userId) {
+        TypedQuery<Entry> query = entityManager.createQuery("FROM Entry where user_id= ?1", Entry.class);
+        return query.setParameter(1, userId).getResultList();
     }
 
     @Transactional
